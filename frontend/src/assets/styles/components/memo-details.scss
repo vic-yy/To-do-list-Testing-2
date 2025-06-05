@@ -1,0 +1,17 @@
+.memo-details {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; 
+    gap: 30px;
+    align-items: center;
+    
+  }
+
+  .memo-title {
+    font-weight: bold;
+  }
+  
+  .memo-status {
+    color: #888;
+    font-style: italic;
+  }

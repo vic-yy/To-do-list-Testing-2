@@ -1,35 +1,36 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useEffect, useState } from 'react';
+import MemoForm from './components/MemoForm'; // Componente para o formulário de lembretes
+import MemoList from './components/MemoList'; // Componente para a lista de lembretes
+import memoService from './services/memoService'; // Serviço para interação com a API de lembretes 
+import './App.css';
 
-function App() {
-  const [count, setCount] = useState(0)
+/**
+ * Componente principal da aplicação MemoKeeper.
+ */
 
+const App = () => {
+  // Estado local para armazenar a lista de memos
+  const [memos, setMemos] = useState([]);
+
+   // Função assíncrona para buscar os memos da API e atualizar o estado local
+  const fetchMemos = async () => {
+    const data = await memoService.getAllMemos();
+    setMemos(data);
+  };
+  // Efeito executado uma vez ao montar o componente para buscar os memos iniciais
+  useEffect(() => {
+    fetchMemos();
+  }, []);
+  // Renderização do componente App
+  // Componente MemoForm para adicionar novos memos, passando a função fetchMemos como propriedade
+  // Componente MemoList para exibir a lista de memos, passando memos e fetchMemos como propriedades
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div className="app-container">
+      <h1>MemoKeeper</h1>
+      <MemoForm fetchMemos={fetchMemos} />
+      <MemoList memos={memos} fetchMemos={fetchMemos} />
+    </div>
+  );
+};
 
-export default App
+export default App;
