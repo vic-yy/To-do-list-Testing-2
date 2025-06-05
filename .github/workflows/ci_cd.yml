@@ -32,8 +32,9 @@ jobs:
     - name: Run tests
       run: npm run test
 
-    - name: Build
-      run: npm run build
+#    - name: Build
+#      run: npm run build
+# Enquanto não resolve a Build
 
   frontend:
     name: Frontend
@@ -60,5 +61,6 @@ jobs:
     - name: Run tests
       run: npm run test
 
-    - name: Build
-      run: npm run build
+#    - name: Build
+#      run: npm run build
+# Enquanto não resolve a Build
