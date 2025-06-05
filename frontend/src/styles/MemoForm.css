@@ -1,0 +1,46 @@
+.memo-form {
+  display: flex;
+  flex-direction: row;
+  
+   
+  justify-content: space-between;
+  gap: 10px;  
+   
+  align-items: center;
+}
+
+.memo-input {
+  width: 80%; 
+  padding: 8px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px;  
+}
+
+.date-input {
+  width: 20%; 
+  padding: 8px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px; 
+}
+
+.error-popup {
+  position: absolute; 
+  background-color: #ffcccc;
+  border: 1px solid #ff0000;
+   
+  right: 28%;
+   
+  border-radius: 4px;
+  text-align: center;
+  top: 90px;
+}
+
+.error-message {
+  margin: 0;
+  color: #ff0000;
+  font-size: 0.8rem;
+}
