@@ -13,7 +13,7 @@ describe('MemoForm', () => {
     });
 
     // 1 - deve renderizar os campos de input e o botão
-    it('render form input and button ', () => {
+    it('test if forms input and button are rendered', () => {
         render(<MemoForm />);
 
         expect(screen.getByPlaceholderText(/Adicione o lembrete/i)).toBeInTheDocument();
@@ -22,7 +22,7 @@ describe('MemoForm', () => {
     });
 
     // 2 - deve mostrar erro para formato de data inválido
-    it('show error for invalid date format ', async () => {
+    it('test if error is shown for invalid date format ', async () => {
         render(<MemoForm />);
 
         const memoInput = screen.getByPlaceholderText(/Adicione o lembrete/i);
@@ -37,7 +37,7 @@ describe('MemoForm', () => {
     });
 
     // 3 - deve mostrar erro para uma data no passado
-    it('show error message if input date is in the past', async () => {
+    it('test if error is shown if input date is in the past', async () => {
         render(<MemoForm />);
 
         const memoInput = screen.getByPlaceholderText(/Adicione o lembrete/i);
@@ -52,7 +52,7 @@ describe('MemoForm', () => {
     });
 
     // 4 - deve chamar createMemo e limpar o formulário em uma submissão válida
-    it('if input is valid call createMemo and fetchMemos', async () => {
+    it('test if createMemo and fetchMemos are called when the input is valid', async () => {
         memoService.createMemo.mockResolvedValue({});
         render(<MemoForm />);
 

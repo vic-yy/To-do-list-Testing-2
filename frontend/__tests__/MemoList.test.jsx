@@ -35,7 +35,7 @@ describe('MemoList', () => {
     });
 
     // 2 - deve chamar deleteMemo ao clicar em "Deletar"
-    it('deve chamar a função de deletar ao clicar no botão "Deletar"', async () => {
+    it('test if Delete button is found and deleteMemo is correctly called"', async () => {
         axios.get.mockResolvedValue({ data: [mockMemos[0]] });
         render(<MemoList />);
 
@@ -47,7 +47,7 @@ describe('MemoList', () => {
     });
 
     // 3 - deve chamar updateMemo ao clicar em "Trocar Status"
-    it('deve chamar a função de atualizar ao clicar no botão "Trocar Status"', async () => {
+    it('test if update request is called and the render is updated', async () => {
         axios.get.mockResolvedValue({ data: [mockMemos[0]] });
         axios.put.mockResolvedValue({ data: [{ ...mockMemos[0], status: 'completado' }] });
         render(<MemoList />);

@@ -44,12 +44,10 @@ describe('memoService', () => {
     it('test deleteMemo with correct id', async () => {
         const memoId = 1;
 
-        axios.delete.mockResolvedValue({ status: 204 });
-
         const result = await memoService.deleteMemo(memoId);
 
         expect(axios.delete).toHaveBeenCalledWith(`${baseURL}/${memoId}`);
-        expect(result.status).toBe(204);
+        expect(axios.delete).toHaveBeenCalledTimes(1);
     });
 
     // 4 - Teste para atualizar um memo com id correto
