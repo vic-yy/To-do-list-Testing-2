@@ -29,3 +29,51 @@ O objetivo principal do projeto é aprofundar e demonstrar práticas de desenvol
   - **JSDOM**: Simulação de ambiente DOM para execução dos testes em Node.js.
 
 Essas tecnologias foram escolhidas para garantir um desenvolvimento ágil, moderno e com alta cobertura de testes automatizados, promovendo a confiabilidade e a manutenção do sistema.
+
+## 4. Execução do Sistema
+
+Para executar o sistema localmente, siga os passos abaixo:
+
+1. **Clone o repositório:**
+    ```bash
+    git clone https://github.com/seu-usuario/To-do-List-Testing.git
+    cd To-do-List-Testing
+    ```
+
+2. **Front End:**
+    ```bash
+    cd frontend
+
+    # instalar dependencias
+    npm install
+
+    # executar
+    npm run dev
+    ```
+
+3. **Back End:**
+    ```bash
+    cd backend
+
+    # instalar dependencias
+    npm install
+
+    # executar
+    npm run dev
+    ```
+    O sistema estará disponível em `http://localhost:5173` (ou outra porta indicada no terminal).
+
+4. **Executando os testes:**
+    ```bash
+    ## NO FRONT END (após instalar dependências)
+    cd frontend
+    npm run test
+
+    # ou, alternativamente, com cobertura:
+    npm run coverage
+    ```
+    Os testes automatizados serão executados e o resultado será exibido no terminal e, ao executar o coverage, será gerada uma pasta com os dados gráficos de cobertura dos testes (Istanbul).
+
+> **Observação:** Certifique-se de ter o [Node.js](https://nodejs.org/) instalado em sua máquina.
+
+---
