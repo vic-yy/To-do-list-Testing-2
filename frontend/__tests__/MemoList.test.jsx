@@ -37,6 +37,7 @@ describe('MemoList', () => {
     // 2 - deve chamar deleteMemo ao clicar em "Deletar"
     it('test if Delete button is found and deleteMemo is correctly called"', async () => {
         axios.get.mockResolvedValue({ data: [mockMemos[0]] });
+        axios.delete.mockResolvedValue({ status: 204 });
         render(<MemoList />);
 
         const deleteButtons = await screen.findAllByRole('button', { name: /Deletar/i });
@@ -62,4 +63,79 @@ describe('MemoList', () => {
         expect(await screen.queryByText('completado')).toBeInTheDocument();
         expect(axios.put).toHaveBeenCalledWith('http://localhost:3333/api/memos/1', { title: 'Lembrete Antigo', status: 'completado' });
     });
+
+    // 4 - deve exibir mensagem de erro ao falhar ao deletar um memo
+    it('test if error message is shown when delete fails', async () => {
+        axios.get.mockResolvedValue({ data: mockMemos });
+        axios.delete.mockRejectedValue(new Error('Failed to delete memo'));
+        render(<MemoList />);
+
+        const deleteButtons = await screen.findAllByRole('button', { name: /Deletar/i });        
+        try {
+            await userEvent.click(deleteButtons[0]);
+        } catch (error) {
+            expect(error.message).toBe('Failed to delete memo');
+        }
+    });
+
+    // 5 - deve exibir mensagem de erro devido a falha no servidor ao atualizar um memo
+    it('test if error message is shown when update fails due to server error', async () => {
+        axios.get.mockResolvedValue({ data: mockMemos });
+        axios.put.mockRejectedValue(new Error({response: {status: 500, message: 'Server error'}}));
+        render(<MemoList />);
+
+        const updateButtons = await screen.findAllByRole('button', { name: /Trocar Status/i });
+        
+        try {
+            await userEvent.click(updateButtons[0]);
+        } catch (error) {
+            expect(console.log).toBe('Server error');
+        }
+    });
+
+    // 6 - deve exibir mensagem de erro devido ao servidor nao responder ao atualizar um memo
+    it('test if error message is shown when update fails due to server not responding', async () => {
+        axios.get.mockResolvedValue({ data: mockMemos });
+        axios.put.mockRejectedValue(new Error('Network Error'));
+        render(<MemoList />);
+
+        const updateButtons = await screen.findAllByRole('button', { name: /Trocar Status/i });
+        
+        try {
+            await userEvent.click(updateButtons[0]);
+        } catch (error) {
+            expect(console.log).toBe('No response from server');
+        }
+    });
+
+    // 7 - deve exibir mensagem de erro devido a erro de requisição ao atualizar um memo
+    it('test if error message is shown when update fails due to request error', async () => {
+        axios.get.mockResolvedValue({ data: mockMemos });
+        axios.put.mockRejectedValue(new Error('Request failed with status code 400'));
+        render(<MemoList />);
+
+        const updateButtons = await screen.findAllByRole('button', { name: /Trocar Status/i });
+        
+        try {
+            await userEvent.click(updateButtons[0]);
+        } catch (error) {
+            expect(console.log).toBe('Request error');
+        }
+    });
+
+    // 8 - deve exibir mensagem de erro genérica ao falhar ao atualizar um memo
+    it('test if generic error message is shown when update fails', async () => {
+        axios.get.mockResolvedValue({ data: mockMemos });
+        axios.put.mockRejectedValue(new Error('Unknown error'));
+        render(<MemoList />);
+
+        const updateButtons = await screen.findAllByRole('button', { name: /Trocar Status/i });
+        
+        try {
+            await userEvent.click(updateButtons[0]);
+        } catch (error) {
+            expect(error.message).toBe('Unknown error');
+        }
+    });
+    
 });
