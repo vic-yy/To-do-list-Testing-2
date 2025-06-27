@@ -135,7 +135,7 @@ describe('memoService', () => {
         errorSpy.mockRestore();
     });
 
-    // 8 - deve exibir mensagem de erro genérica ao falhar ao atualizar um memo
+    // 9 - deve exibir mensagem de erro genérica ao falhar ao atualizar um memo
     it("test if generic error message is shown when update fails", async () => {
         axios.get.mockRejectedValue(new Error("Catch Error"));
         
