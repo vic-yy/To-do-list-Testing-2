@@ -24,14 +24,20 @@ const formattedDate = new Date(Date.now()).toLocaleDateString('pt-BR', {
  */
 
 
-  const createMemoSimulado = async (memo) => {
-    const { title, created_at } = memo;
+const createMemoSimulado = async (memo) => {
+    const { title, created_at, updated_at } = memo;
     const formattedDate = created_at || new Date(Date.now()).toLocaleDateString('pt-BR', {
         day: '2-digit',
         month: '2-digit',
         year: 'numeric',
     });
-    const newMemo = { id: lista.length + 1, title, status: 'pendente', created_at: formattedDate };
+    const newMemo = { 
+        id: lista.length + 1, 
+        title, 
+        status: 'pendente', 
+        created_at: formattedDate,
+        updated_at: updated_at || formattedDate  // Adicionando a data de atualização
+    };
     lista.push(newMemo);
     return newMemo;
 }
@@ -74,21 +80,38 @@ const updateMemoSimulado = async (id, memo) => {
     const numericId = parseInt(id, 10);
     const index = lista.findIndex((memo) => memo.id === numericId);
 
-
     if (index === -1) return false;
 
-
-    lista[index] = { ...lista[index], ...memo };
-    return lista[index]; // Retorna o memo atualizado
+    lista[index] = { 
+        ...lista[index], 
+        ...memo, 
+        updated_at: new Date(Date.now()).toLocaleDateString('pt-BR', {  // Atualizando a data
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+        })
+    };
+    return lista[index];
 }
 
+// Função para obter um "memo" pelo ID
+const getMemoById = async (id) => {
+    return lista.find((memo) => memo.id === parseInt(id, 10)); // Busca pelo ID
+}
 
-
+// Objeto Memo com método create para compatibilidade com os testes
+const Memo = {
+    create: async (memoData) => {
+        return await createMemoSimulado(memoData);
+    }
+};
 
 module.exports = {
     createMemoSimulado,
     getAllSimulado,
+    getMemoById,
     deleteMemoSimulado,
     updateMemoSimulado,
-    lista
+    lista,
+    Memo
 };

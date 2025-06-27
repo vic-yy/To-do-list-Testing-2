@@ -21,13 +21,21 @@ const deleteMemoSimulado = async (request, response) => {
 const updateMemoSimulado = async (request, response) => {
     const { id } = request.params;
     const updatedMemo = await memoModel.updateMemoSimulado(id, request.body);
-    if (!updatedMemo) return response.status(404).json({ message: 'Memo not found' });
+    if (!updatedMemo) return response.status(400).json({ message: 'Memo not found' });
     return response.status(200).json(updatedMemo);
+}
+
+const getMemoById = async (request, response) => {
+    const { id } = request.params;
+    const memo = await memoModel.getMemoById(id); // Método a ser implementado no memoModel
+    if (!memo) return response.status(404).json({ message: 'Memo not found' });
+    return response.status(200).json(memo);
 }
 
 module.exports = {
     createMemoSimulado,
     getAllSimulado,
+    getMemoById,
     deleteMemoSimulado,
     updateMemoSimulado
 };

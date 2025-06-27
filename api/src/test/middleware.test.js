@@ -16,7 +16,7 @@ describe('Middleware: validateFieldTitle', () => {
     validateFieldTitle(req, res, next);
 
     expect(res.status).toHaveBeenCalledWith(400);
-    expect(res.json).toHaveBeenCalledWith({ message: 'The field "title" is mandatory.' });
+    expect(res.json).toHaveBeenCalledWith({ message: 'The field \"title\" cannot be empty.' });
     expect(next).not.toHaveBeenCalled();
   });
 

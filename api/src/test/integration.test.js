@@ -152,7 +152,7 @@ describe('Memo API (Simulado)', () => {
         .send({ status: 'invalidStatus' });
 
       expect(res.statusCode).toBe(400);
-      expect(res.body).toEqual({ message: 'The field \"title\" is mandatory.' });
+      expect(res.body).toEqual({ message: 'The field \"title\" cannot be empty.' });
     });
   });
 
