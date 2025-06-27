@@ -5,14 +5,10 @@
 const validateFieldTitle = (request, response, next) => {
     const { body } = request;
 
-    if (body.title === undefined) {
-        return response.status(400).json({ message: 'The field "title" is mandatory.' });
-    }
-    if (body.title === '') {
+    if (body.title === undefined || body.title === '') {
         return response.status(400).json({ message: 'The field "title" cannot be empty.' });
     }
 
-    // Se todas as validações passarem, o next() continua com o próximo middleware ou rota.
     next();
 };
 
@@ -23,7 +19,7 @@ const validateFieldTitle = (request, response, next) => {
 
 const validateFieldStatus = (request, response, next) => {
     const { body } = request;
-    
+
     if (body.status === undefined) {
         return response.status(400).json({ message: 'The field "status" is mandatory.' });
     }
@@ -31,9 +27,15 @@ const validateFieldStatus = (request, response, next) => {
         return response.status(400).json({ message: 'The field "status" cannot be empty.' });
     }
 
-    
     next();
 };
+
+
+const validateDate = (date) => {
+    const regex = /^\d{2}\/\d{2}\/\d{4}$/;
+    return regex.test(date);
+}
+
 
 module.exports = {
     validateFieldTitle,
