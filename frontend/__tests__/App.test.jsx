@@ -9,7 +9,7 @@ describe('App', () => {
     // 1 - Deve buscar os memos iniciais ao ser renderizado
     it('test call getAllMemos at the start of render', async () => {
         const mockMemos = [
-            { id: 1, title: 'Lembrete Antigo', status: 'pendente', created_at: '12/12/0000' },
+            { id: 1, title: 'Lembrete Antigo', status: 'pendente', created_at: '12/12/8888' },
             { id: 2, title: 'Lembrete Recente', status: 'pendente', created_at: '10/05/9999' }
         ];
         memoService.getAllMemos.mockResolvedValue(mockMemos);
