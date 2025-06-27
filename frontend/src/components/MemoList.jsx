@@ -5,6 +5,8 @@ import '../assets/styles/main.scss';
 // Componente funcional MemoList que exibe uma lista de memos
 const MemoList = ({ fetchMemos }) => {
   const [memos, setMemos] = useState([]);
+  const [error, setError] = useState('');
+  const [showErrorPopup, setShowErrorPopup] = useState(false);
   // Efeito que executa ao montar o componente ou quando fetchMemos muda
   useEffect(() => {
     const fetchMemosData = async () => {
@@ -25,7 +27,12 @@ const MemoList = ({ fetchMemos }) => {
       const response = await memoService.deleteMemo(id);
 
       if (response.status === 204) {
-        fetchMemos(); // Atualiza a lista de memos após a exclusão bem-sucedida
+        if (fetchMemos && typeof fetchMemos === 'function') {
+          fetchMemos(); // Atualiza a lista de memos após a exclusão bem-sucedida
+        } else {
+          // Atualiza a lista localmente se fetchMemos não estiver disponível
+          setMemos(prevMemos => prevMemos.filter(memo => memo.id !== id));
+        }
       } else {
         console.log('Memo not found or unable to delete.');
       }
@@ -101,25 +108,29 @@ const MemoList = ({ fetchMemos }) => {
   return (
     <div>
       <h2>Memos List</h2>
-      {sortedDates.map((date) => (
-        <div key={date} className="date-group">
-          <h3>{date}</h3>
-          <ul>
-            {groupedMemos[date].map((memo) => (
-              <li key={memo.id} className="memo-itens">
-                <div className='memo-details'>
-                  <span className='memo-title'>{memo.title}</span>
-                  <span className='memo-status'>{memo.status}</span>
-                </div>
-                <div className="buttons">
-                  <button onClick={() => handleUpdate(memo.id, memo.status)}>Trocar Status</button>
-                  <button onClick={() => handleDelete(memo.id)}>Deletar</button>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
+      {memos.length === 0 ? (
+        <p>No memos available</p>
+      ) : (
+        sortedDates.map((date) => (
+          <div key={date} className="date-group">
+            <h3>{date}</h3>
+            <ul>
+              {groupedMemos[date].map((memo) => (
+                <li key={memo.id} className="memo-itens">
+                  <div className='memo-details'>
+                    <span className='memo-title'>{memo.title}</span>
+                    <span className='memo-status'>{memo.status}</span>
+                  </div>
+                  <div className="buttons">
+                    <button onClick={() => handleUpdate(memo.id, memo.status)}>Trocar Status</button>
+                    <button onClick={() => handleDelete(memo.id)}>Deletar</button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      )}
     </div>
   );
 };
